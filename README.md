@@ -1,5 +1,5 @@
 # Keycloak: Event Listener SPI & Publish events to Kafka
-
+source: https://medium.com/keycloak/keycloak-event-listener-spi-publish-to-kafka-db1fabd285c1
 # Setup
 
 Kafka running at port 9092 or update in Producer.java
