@@ -3,7 +3,7 @@ package io.github.akoserwal;
 import org.keycloak.events.Event;
 import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.admin.AdminEvent;
-import twitter4j.JSONObject;
+import org.json.JSONObject; 
 
 public class KeycloakCustomEventListener implements EventListenerProvider {
 
