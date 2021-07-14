@@ -17,7 +17,7 @@ public class KeycloakCustomEventListener implements EventListenerProvider {
 						.put( "clientId", event.getClientId())  
 						.put( "userId", event.getUserId())  
 						.put( "ipAddress", event.getIpAddress())  
-						.put( "details", event.getDetails().toString())
+						.put( "details",new JSONObject(event.getDetails()))
 						.put( "error", event.getError())
 						.toString();
 
@@ -33,7 +33,12 @@ public class KeycloakCustomEventListener implements EventListenerProvider {
 						.put("time", adminEvent.getTime())
 						.put("operationType", adminEvent.getOperationType())
 						.put("resourceType", adminEvent.getResourceType())
-						.put("details", adminEvent.getAuthDetails().toString())
+						.put("details",  new JSONObject()
+								.put("clientID", adminEvent.getAuthDetails().getClientId())
+								.put("ipAddress", adminEvent.getAuthDetails().getIpAddress())
+								.put("realmId", adminEvent.getAuthDetails().getRealmId())
+								.put("userId", adminEvent.getAuthDetails().getUserId())
+							)
 						.put( "error", adminEvent.getError())
 						.toString();		
 
