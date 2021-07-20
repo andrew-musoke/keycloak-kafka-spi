@@ -16,4 +16,7 @@ Kafka running at port 9092 or update in Producer.java
   Restart the keycloak server 
   `./standalone.sh`
   
-  
+  Run on local keycloak
+  ```
+  rm oltranz/keycloak-14.0.0/standalone/deployments/keycloak-spi-kafka* ; cp /mnt/c/Users/amusoke/iCloudDrive/Oltranz/code_repos/keycloak-spi-kafka/target/keycloak-spi-kafka.jar oltranz/keycloak-14.0.0/standalone/deployments/
+  ```
