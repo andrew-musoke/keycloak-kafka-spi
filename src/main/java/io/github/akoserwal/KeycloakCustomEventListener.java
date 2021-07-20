@@ -10,6 +10,7 @@ public class KeycloakCustomEventListener implements EventListenerProvider {
 	@Override
 	public void onEvent(Event event) {
 			System.out.println("Publishing Login Event:-"+event.getType());
+			String loginTopic = "login."+ event.getRealmId() +"-realm.keycloak.events";
 			// build log
 			String userLogString = new JSONObject()
 						.put( "time", event.getTime()) 
@@ -21,13 +22,13 @@ public class KeycloakCustomEventListener implements EventListenerProvider {
 						.put( "error", event.getError())
 						.toString();
 
-			Producer.publishEvent("login.keycloak.events", userLogString);
+			Producer.publishEvent(loginTopic, userLogString);
 	}
 
 	@Override
 	public void onEvent(AdminEvent adminEvent, boolean b) {
 			System.out.println("Publishing Admin Event:-"+adminEvent.getResourceType().name()); 
-
+			String adminTopic = "admin."+ adminEvent.getAuthDetails().getRealmId() + "-realm.keycloak.events";
 			//build log
 			String adminLogString = new JSONObject()
 						.put("time", adminEvent.getTime())
@@ -42,7 +43,7 @@ public class KeycloakCustomEventListener implements EventListenerProvider {
 						.put( "error", adminEvent.getError())
 						.toString();		
 
-			Producer.publishEvent("admin.keycloak.events", adminLogString);
+			Producer.publishEvent(adminTopic, adminLogString);
 	}
 
 	@Override
