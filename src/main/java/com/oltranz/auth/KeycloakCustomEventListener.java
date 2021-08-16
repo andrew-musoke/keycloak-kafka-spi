@@ -28,14 +28,14 @@ public class KeycloakCustomEventListener implements EventListenerProvider {
 		RealmModel realm = session.realms().getRealm(event.getRealmId());
 		UserModel user = session.users().getUserById(event.getUserId(), realm);
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 		
 		// build topic name
 		String loginTopic =  "login."+ event.getRealmId() +"-realm.keycloak.events";
 		
 		// build log
 		String userLogString = new JSONObject()
-					.put( "time", event.getTime()) 
+					.put( "time", dateFormat.format(new Date(event.getTime()))) 
 					.put( "eventType", event.getType())  
 					.put( "clientId", event.getClientId())  
 					.put( "userId", event.getUserId())  
