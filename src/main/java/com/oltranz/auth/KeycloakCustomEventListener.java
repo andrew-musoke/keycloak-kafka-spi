@@ -25,7 +25,10 @@ public class KeycloakCustomEventListener implements EventListenerProvider {
 
 		// Get realm and user models created at event time.
 		RealmModel realm = session.realms().getRealm(event.getRealmId());
-		UserModel user = session.users().getUserById(event.getUserId(), realm);
+		UserModel user = null;
+		if (event.getUserId() != null) {
+			user = session.users().getUserById(event.getUserId(), realm);
+		}
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
@@ -33,21 +36,23 @@ public class KeycloakCustomEventListener implements EventListenerProvider {
 		String loginTopic = "login." + event.getRealmId() + "-realm.keycloak.events";
 
 		// build log
-		String userLogString = new JSONObject()
-				.put("time", dateFormat.format(new Date(event.getTime()))).put("eventType",
-						event.getType())
-				.put("clientId", event.getClientId()).put("userId", event.getUserId())
-				.put("ipAddress", event.getIpAddress()).put("details", new JSONObject(event.getDetails()))
-				.put("customerInfo",
-						new JSONObject()
-								.put("userCreationTime", dateFormat.format(new Date(user.getCreatedTimestamp())))
-								.put("attributes", new JSONObject(user.getAttributes()))
-								.put("serviceAccount", user.getServiceAccountClientLink())
-								.put("emailVerified", user.isEmailVerified()))
-				.put("error", event.getError()).toString();
-
+		JSONObject userLogString = new JSONObject()
+				.put("time", dateFormat.format(new Date(event.getTime())))
+				.put("eventType", event.getType())
+				.put("clientId", event.getClientId())
+				.put("userId", event.getUserId())
+				.put("ipAddress", event.getIpAddress())
+				.put("details", new JSONObject(event.getDetails()))
+				.put("error", event.getError());
+		if (user != null){
+		userLogString.put("customerInfo", new JSONObject()
+					.put("userCreationTime", dateFormat.format(new Date(user.getCreatedTimestamp())))
+					.put("attributes", new JSONObject(user.getAttributes()))
+					.put("serviceAccount", user.getServiceAccountClientLink())
+					.put("emailVerified", user.isEmailVerified()));
+		}
 		// publish to kafka
-		Producer.publishEvent(loginTopic, userLogString);
+		Producer.publishEvent(loginTopic, userLogString.toString());
 	}
 
 	@Override
@@ -59,10 +64,11 @@ public class KeycloakCustomEventListener implements EventListenerProvider {
 		// build topic name
 		String adminTopic = "admin." + adminEvent.getAuthDetails().getRealmId() + "-realm.keycloak.events";
 
-		// If the admin event has a representation i.e. is a CREATE or UPDATE then do the expensive string comparisons.
+		// If the admin event has a representation i.e. is a CREATE or UPDATE then do
+		// the expensive string comparisons.
 		if (respresentationExists) {
 			System.out.println("Op type:-" + adminEvent.getOperationType().toString());
-			
+
 			// Do special formating if the event is a USER CREATION.
 			if (adminEvent.getResourceTypeAsString().equals("USER")
 					&& adminEvent.getOperationType().toString().equals("CREATE")) {
