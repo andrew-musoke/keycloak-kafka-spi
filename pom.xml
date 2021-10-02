@@ -50,7 +50,7 @@
     </dependencies>
 
     <build>
-        <finalName>keycloak-spi-kafka</finalName>
+        <finalName>keycloak-spi-kafka-staging</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
