@@ -20,3 +20,7 @@ Kafka running at port 9092 or update in Producer.java
   ```
   rm ~/oltranz/keycloak-15.0.2/standalone/deployments/keycloak-spi-kafka* ; cp /mnt/c/Users/amusoke/iCloudDrive/Oltranz/code_repos/keycloak-spi-kafka/target/keycloak-spi-kafka* ~/oltranz/keycloak-15.0.2/standalone/deployments/
   ```
+
+
+  Differences from main and staging
+  https://github.com/andrew-musoke/keycloak-kafka-spi/compare/main...staging

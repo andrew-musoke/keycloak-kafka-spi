@@ -18,7 +18,7 @@ public class ActivitiesSourcing {
         String indirectObject = "";
         String directObject = "";
         String username = "";
-        final String category = "UserManagement";
+        final String category = "User Management";
         
         if (event.getDetails() != null) {
             username = event.getDetails().get("username");
