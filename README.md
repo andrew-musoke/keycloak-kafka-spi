@@ -18,5 +18,5 @@ Kafka running at port 9092 or update in Producer.java
   
   Run on local keycloak
   ```
-  rm oltranz/keycloak-14.0.0/standalone/deployments/keycloak-spi-kafka* ; cp /mnt/c/Users/amusoke/iCloudDrive/Oltranz/code_repos/keycloak-spi-kafka/target/keycloak-spi-kafka.jar oltranz/keycloak-14.0.0/standalone/deployments/
+  rm ~/oltranz/keycloak-15.0.2/standalone/deployments/keycloak-spi-kafka* ; cp /mnt/c/Users/amusoke/iCloudDrive/Oltranz/code_repos/keycloak-spi-kafka/target/keycloak-spi-kafka* ~/oltranz/keycloak-15.0.2/standalone/deployments/
   ```

@@ -44,6 +44,7 @@ public class KeycloakCustomEventListener implements EventListenerProvider {
 				.put("ipAddress", event.getIpAddress())
 				.put("details", new JSONObject(event.getDetails()))
 				.put("error", event.getError());
+		// some event types have no user info
 		if (user != null){
 		userLogString.put("customerInfo", new JSONObject()
 					.put("userCreationTime", dateFormat.format(new Date(user.getCreatedTimestamp())))
@@ -53,6 +54,10 @@ public class KeycloakCustomEventListener implements EventListenerProvider {
 		}
 		// publish to kafka
 		Producer.publishEvent(loginTopic, userLogString.toString());
+
+		// publish activities.
+		ActivitiesSourcing activitiesSourcing = new ActivitiesSourcing();
+		activitiesSourcing.sourceActivities(event, user, dateFormat);
 	}
 
 	@Override
