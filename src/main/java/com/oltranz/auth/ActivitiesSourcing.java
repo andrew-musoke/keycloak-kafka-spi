@@ -4,6 +4,7 @@ import org.keycloak.models.UserModel;
 import java.text.SimpleDateFormat;
 import org.keycloak.events.Event;
 import java.util.Date;
+import java.util.Objects;
 
 public class ActivitiesSourcing {
     public ActivitiesSourcing() {
@@ -71,7 +72,7 @@ public class ActivitiesSourcing {
         }
 
         // Determine topic based on UI client performing actions.
-        String clientId = event.getClientId();
+        String clientId = Objects.toString(event.getClientId(), "");
         switch (clientId) {
             case "basesms":
                 activityTopic = System.getenv("BASESMS_ACTIVITY_TOPIC"); 
