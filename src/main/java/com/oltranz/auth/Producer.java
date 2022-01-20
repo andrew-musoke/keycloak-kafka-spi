@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class Producer {
 
-	private final static String BOOTSTRAP_SERVER = System.getenv("KAFKA_URL");
+	private final static String BOOTSTRAP_SERVER = System.getenv("KAFKA_URL_STAGING");
 
 	public static void publishEvent(String topic, String value){
 		//reset thread context

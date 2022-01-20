@@ -2,6 +2,7 @@ package com.oltranz.auth;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import org.json.JSONObject; 
 
@@ -10,6 +11,7 @@ import org.json.simple.parser.*;
 
 public class Utils {
     // When user is created via admin API, format the event and representation into one. 
+    // Special case for creating dubai visa user 
     public static String formatRegisterEvent(AdminEvent regEvent){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 		String eventType = "REGISTER";
@@ -50,4 +52,22 @@ public class Utils {
          
         return registerEventString;
 	}   
+
+    public static String formatActivitiesObject(String category, String eventtype, String username, String verb, String indirectObject, String directObject, String customerid, String timestamp){
+        // Objects.toString(id, "") to return empty string if null
+        
+        String activitiesEventObject= new JSONObject()
+            .put("category" , Objects.toString(category, ""))
+            .put("eventType", Objects.toString( eventtype, ""))
+            .put("username" , Objects.toString(username, ""))
+            .put("verb" , Objects.toString(verb, ""))
+            .put("indirectObject" , Objects.toString(indirectObject, ""))
+            .put("directObject" , Objects.toString(directObject, ""))
+            .put("customerid" , Objects.toString(customerid, ""))
+            .put("timestamp", Objects.toString( timestamp, "") )
+            .toString(); 
+        return activitiesEventObject;
+        
+    }
+    
 }
